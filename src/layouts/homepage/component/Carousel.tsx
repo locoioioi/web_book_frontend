@@ -7,7 +7,7 @@ export const Carousel = () => {
                 <div className="carousel-item active" data-bs-interval="10000">
                     <div className="row align-items-center">
                         <div className="col-5 text-center">
-                            <img src={require('./../../../images/books/book1.png')} className='float-end'  style={{width:150}} alt="..."/>
+                            <img src={'/images/books/book1.png'} className='float-end'  style={{width:150}} alt="..."/>
                         </div>
                         <div className="col-7">
                             <h5>First slide label</h5>
@@ -18,7 +18,7 @@ export const Carousel = () => {
                 <div className="carousel-item" data-bs-interval="10000">
                     <div className="row align-items-center">
                         <div className="col-5 text-center">
-                            <img src={require('./../../../images/books/book2.png')} className='float-end'  style={{width:150}} alt="..."/>
+                            <img src={'/images/books/book2.png'} className='float-end'  style={{width:150}} alt="..."/>
                         </div>
                         <div className="col-7">
                             <h5>First slide label</h5>
@@ -29,7 +29,7 @@ export const Carousel = () => {
                 <div className="carousel-item" data-bs-interval="10000">
                     <div className="row align-items-center">
                         <div className="col-5 text-center">
-                            <img src={require('./../../../images/books/book3.png')} className='float-end'  style={{width:150}} alt="..."/>
+                            <img src={'/images/books/book3.png'} className='float-end'  style={{width:150}} alt="..."/>
                         </div>
                         <div className="col-7">
                             <h5>First slide label</h5>
