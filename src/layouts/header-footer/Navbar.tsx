@@ -1,6 +1,29 @@
-import React from 'react';
-
-export const Navbar = () => {
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { NavbarSearch } from '../navbar-search/NavSearch';
+import { findBookNavBar } from '../../api/BookAPI';
+import BookModel from '../../models/Book';
+interface NavbarInterface {
+  search: string;
+  setSearch: (name : string) => void;
+}
+export const Navbar:React.FC<NavbarInterface> = (props) => {
+  const handleSearch = () => {
+    props.setSearch(searchBox);
+    setSearchBox("");
+  }
+  const [books,setBooks] = useState<BookModel[]>([])
+  const [searchBox,setSearchBox] = useState("")
+  const [error,setError] = useState(null)
+  useEffect(() => {
+    findBookNavBar(searchBox)
+    .then((booksData) => {
+      setBooks(booksData.result);
+    })
+    .catch((error) => {
+      setError(error.message)
+    })
+  },[searchBox])
+  console.log(books)
     return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
@@ -41,11 +64,22 @@ export const Navbar = () => {
           </div>
   
           {/* Tìm kiếm */}
-          <form className="d-flex">
-            <input className="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search" />
-            <button className="btn btn-outline-success" type="submit">Search</button>
-          </form>
-  
+          <div className="d-flex position-relative">
+            <input className="form-control me-2" value={searchBox} onChange={(e:ChangeEvent<HTMLInputElement>) => {setSearchBox(e.target.value)}} type="search" placeholder="Tìm kiếm" aria-label="Search" />
+            <button className="btn btn-outline-success" onClick={()=> {handleSearch()}} tabIndex={0} type="submit">Search</button>
+            <ul className='position-absolute top-100 p-0 mt-1'>
+              {
+                searchBox !== "" &&
+                books.map(book => (
+                  <NavbarSearch book={book} key={book.bookId}/>
+                ))
+              }
+            </ul>
+            
+          </div>
+          
+
+
           {/* Biểu tượng giỏ hàng */}
           <ul className="navbar-nav me-1">
             <li className="nav-item">

@@ -1,42 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import BookModel from '../../../models/Book';
+import { CarouselItem } from './CarouselItem';
+interface CarouselProps {
+    books: BookModel[]
+}
 
-export const Carousel = () => {
+export const Carousel:React.FC<CarouselProps> = (props) => {
     return (
         <div id="carouselExampleDark" className="carousel carousel-dark slide">
             <div className="carousel-inner">
-                <div className="carousel-item active" data-bs-interval="10000">
-                    <div className="row align-items-center">
-                        <div className="col-5 text-center">
-                            <img src={'/images/books/book1.png'} className='float-end'  style={{width:150}} alt="..."/>
+                {
+                    props.books.map((book,index) =>(
+                        <div className={index === 0 ?`carousel-item active`:`carousel-item`} data-bs-interval="10000" key={index}>
+                            <CarouselItem book={book}/>
                         </div>
-                        <div className="col-7">
-                            <h5>First slide label</h5>
-                            <p>Some representative placeholder content for the first slide.</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="carousel-item" data-bs-interval="10000">
-                    <div className="row align-items-center">
-                        <div className="col-5 text-center">
-                            <img src={'/images/books/book2.png'} className='float-end'  style={{width:150}} alt="..."/>
-                        </div>
-                        <div className="col-7">
-                            <h5>First slide label</h5>
-                            <p>Some representative placeholder content for the first slide.</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="carousel-item" data-bs-interval="10000">
-                    <div className="row align-items-center">
-                        <div className="col-5 text-center">
-                            <img src={'/images/books/book3.png'} className='float-end'  style={{width:150}} alt="..."/>
-                        </div>
-                        <div className="col-7">
-                            <h5>First slide label</h5>
-                            <p>Some representative placeholder content for the first slide.</p>
-                        </div>
-                    </div>
-                </div>
+                    ))
+                }
             </div>
             <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
                 <span className="carousel-control-prev-icon" aria-hidden="true"></span>
