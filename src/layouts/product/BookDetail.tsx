@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import { getBookById } from "../../api/BookAPI";
 import { ImagesPerBook } from "./component/ImagesPerBook";
 import { BookReview } from "./component/BookReview";
+import { rendering } from "../utils/StarRender";
+import formatNum from "../utils/FormatNumber";
 
 export const BookDetail: React.FC = () => {
   const [book, setBook] = useState<BookModel | null>(null);
@@ -47,10 +49,9 @@ export const BookDetail: React.FC = () => {
         <div className="col-8">
           <div className="row">
             <div className="col-8">
-              Description
               <h2>Name: {book?.name}</h2>
-              <h4>Rating: {book?.avgRating}</h4>
-              <h3>Price: {book?.salePrice}</h3>
+              <h4>{rendering(book?.avgRating?book.avgRating:0)}</h4>
+              <h3>Price: {formatNum(book?.salePrice!)}</h3>
               <hr />
               {book?.description}
               <hr />

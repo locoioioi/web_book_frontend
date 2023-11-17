@@ -3,6 +3,7 @@ import { NavbarSearch } from "../navbar-search/NavSearch";
 import { findBookNavBar } from "../../api/BookAPI";
 import BookModel from "../../models/Book";
 import { Link, NavLink } from "react-router-dom";
+import { Search } from "react-bootstrap-icons";
 interface NavbarInterface {
   search: string;
   setSearch: (name: string) => void;
@@ -140,7 +141,7 @@ export const Navbar: React.FC<NavbarInterface> = (props) => {
             tabIndex={0}
             type="submit"
           >
-            Search
+            <Search/>
           </button>
           <ul className="position-absolute top-100 p-0 mt-1">
             {searchBox !== "" &&

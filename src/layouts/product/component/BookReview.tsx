@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getReviewByBookId } from "../../../api/ReviewAPI";
 import Review from "../../../models/Review";
 import { UserInfor } from "./UserInfor";
+import { rendering } from "../../utils/StarRender";
 
 interface ReviewInterface {
   bookId: number;
@@ -37,10 +38,12 @@ export const BookReview: React.FC<ReviewInterface> = (props) => {
   return (
     <div className="col-3">
       {reviewList.map((review, index) => (
-        <div className="row">
-          <UserInfor reviewId={review.reviewId} />
+        <div className="row" key={review.reviewId}>
+          <UserInfor reviewId={review.reviewId}/>
           <div className="col">
-            <p>rating: {review.rating}</p>
+            <div className="">
+                {rendering(review.rating?review.rating:0)}
+            </div>
           </div>
           <div className="col">
             <p>{review.description}</p>

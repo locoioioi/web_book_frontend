@@ -6,6 +6,8 @@ import {
   getImageBookOfBook,
 } from "../../../api/ImageBookAPI";
 import { Link } from "react-router-dom";
+import { rendering } from "../../utils/StarRender";
+import formatNum from "../../utils/FormatNumber";
 interface BookProps {
   book: BookModel;
 }
@@ -49,22 +51,25 @@ export const BookProps: React.FC<BookProps> = (props) => {
 
         <div className="card-body">
           <h5 className="card-title">{props.book.name}</h5>
-          <p className="card-text">{props.book.description}</p>
+
           <div className="price">
             <span className="original-price">
-              <del>{props.book.listedPrice}</del>
+              <del>{formatNum(props.book.listedPrice!)}</del>
             </span>
             <span className="discounted-price">
-              <strong>{props.book.salePrice}</strong>
+              <strong>{formatNum(props.book.salePrice!)}</strong>
             </span>
           </div>
           <div className="row mt-2" role="group">
             <div className="col-6">
-              <a href="#" className="btn btn-secondary btn-block">
+              <div className="">
+                {rendering(props.book.avgRating ? props.book.avgRating : 0)}
+              </div>
+            </div>
+            <div className="col-6 d-flex justify-content-end">
+              <a href="#" className="btn btn-secondary btn-block me-3">
                 <i className="fas fa-heart"></i>
               </a>
-            </div>
-            <div className="col-6">
               <button className="btn btn-danger btn-block float-end">
                 <i className="fas fa-shopping-cart"></i>
               </button>
