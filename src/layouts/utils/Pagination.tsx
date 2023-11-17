@@ -33,23 +33,23 @@ export const Pagination:React.FC<PaginationComponent> = (props) => {
     return (
 
         <nav aria-label="...">
-        <ul className="pagination">
-            <li className="page-item " onClick={() => props.paginate(1)}>
-                <button className='page-link' >First</button>
-            </li>
+            <ul className="pagination">
+                <li className="page-item " onClick={() => props.paginate(1)}>
+                    <button className='page-link' >First</button>
+                </li>
 
-            {   
-                pages.map(page => (
-                    <li className={"page-item" + (props.currentPage === page ? " active" :"")} key={page} onClick={() => props.paginate(page)} >
-                        <button className={"page-link" }  >{page}</button>
-                    </li>
-                ))
-            }
+                {   
+                    pages.map(page => (
+                        <li className={"page-item" + (props.currentPage === page ? " active" :"")} key={page} onClick={() => props.paginate(page)} >
+                            <button className={"page-link" }  >{page}</button>
+                        </li>
+                    ))
+                }
 
-            <li className="page-item" onClick={() => props.paginate(props.totalPages)}>
-                <button className='page-link' >Last</button>
-            </li>
-        </ul>
+                <li className="page-item" onClick={() => props.paginate(props.totalPages)}>
+                    <button className='page-link' >Last</button>
+                </li>
+            </ul>
         </nav>
     )
 }

@@ -1,4 +1,3 @@
-import React from "react";
 import BookModel from "../models/Book";
 import { getRequest } from "./Request";
 
@@ -54,12 +53,33 @@ export const findBookNavBar = async (name: string): Promise<BookInterface> => {
 
 export const findBooksByName = async (
   name: string,
-  currentpage: number
+  categoryId: number,
+  currentPage: number
 ): Promise<BookInterface> => {
-  let url: string = `http://localhost:8080/books?size=8&page=${currentpage}`;
+  let url: string = `http://localhost:8080/books?size=8&page=${currentPage}`;
 
-  if (name !== "") {
-    url = `http://localhost:8080/books/search/findByNameContains?size=8&page=${currentpage}&name=${name}`;
+  if (name !== "" && categoryId === 0) {
+    url = `http://localhost:8080/books/search/findByNameContains?size=8&page=${currentPage}&name=${name}`;
+  } else if (name === "" && categoryId > 0) {
+    url = `http://localhost:8080/books/search/findByCategories_categoryId?categoryId=${categoryId}&page=${currentPage}&size=8`;
+  } else if (name !== "" && categoryId > 0) {
+    url = `http://localhost:8080/books/search/findByNameContainsAndCategories_categoryId?name=${name}&categoryId=${categoryId}&page=${currentPage}&size=8`;
   }
+
   return getBook(url);
+};
+
+export const getBookById = async (bookId: number): Promise<BookModel> => {
+  const response = await getRequest(`http://localhost:8080/books/${bookId}`);
+  return {
+    bookId: response.bookId,
+    name: response.name,
+    author: response.author,
+    listedPrice: response.listedPrice,
+    salePrice: response.salePrice,
+    ISBN: response.ISBN,
+    stockQuantity: response.stockQuantity,
+    avgRating: response.avgRating,
+    description: response.description,
+  };
 };
