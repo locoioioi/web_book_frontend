@@ -7,6 +7,8 @@ import { Homepage } from "./layouts/homepage/Hompage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { About } from "./layouts/about/About";
 import { BookDetail } from "./layouts/product/BookDetail";
+import { RegisterPage } from "./layouts/user/Register";
+import {ActivateAccount} from "./layouts/user/ActivateAccount";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -22,6 +24,8 @@ function App() {
           ></Route>
           <Route path="/about" element={<About />}></Route>
           <Route path="/book/:bookId" element={<BookDetail />}></Route>
+          <Route path="/register" element={<RegisterPage />}></Route>
+          <Route path="/activate/:email/:code" element={<ActivateAccount />}></Route>
         </Routes>
         <Footer />
       </BrowserRouter>
