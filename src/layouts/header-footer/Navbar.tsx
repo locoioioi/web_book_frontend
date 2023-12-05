@@ -4,6 +4,8 @@ import { findBookNavBar } from "../../api/BookAPI";
 import BookModel from "../../models/Book";
 import { Link, NavLink } from "react-router-dom";
 import { Search } from "react-bootstrap-icons";
+import {jwtDecode} from "jwt-decode";
+
 interface NavbarInterface {
   search: string;
   setSearch: (name: string) => void;
@@ -16,6 +18,7 @@ export const Navbar: React.FC<NavbarInterface> = (props) => {
   const [books, setBooks] = useState<BookModel[]>([]);
   const [searchBox, setSearchBox] = useState("");
   const [error, setError] = useState(null);
+  const [isLogin,setIsLogin] = useState(false);
   useEffect(() => {
     findBookNavBar(searchBox)
       .then((booksData) => {
@@ -24,7 +27,18 @@ export const Navbar: React.FC<NavbarInterface> = (props) => {
       .catch((error) => {
         setError(error.message);
       });
-  }, [searchBox]);
+    // check isLogin
+    try {
+      const token  = localStorage.getItem("token");
+      const decodedToken = jwtDecode(token!);
+      if (decodedToken != null) {
+        setIsLogin(true);
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }, [searchBox,isLogin]);
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
@@ -161,13 +175,23 @@ export const Navbar: React.FC<NavbarInterface> = (props) => {
         </ul>
 
         {/* Biểu tượng đăng nhập */}
-        <ul className="navbar-nav me-1">
-          <li className="nav-item">
-            <a className="nav-link" href="#">
-              <i className="fas fa-user"></i>
-            </a>
-          </li>
-        </ul>
+        {
+          isLogin
+              ?
+              <ul className="navbar-nav me-1">
+                <li className="nav-item">
+                  <a className="nav-link" href="#">
+                    <i className="fas fa-user"></i>
+                  </a>
+                </li>
+              </ul>
+              :
+              <div className={"d-flex"}>
+                <Link to={"/login"} className={"btn btn-success me-2"}>Login</Link>
+                <Link to={"/register"} className={"btn btn-outline-success"}>Register</Link>
+              </div>
+        }
+
       </div>
     </nav>
   );

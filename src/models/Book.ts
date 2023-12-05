@@ -8,7 +8,7 @@ class BookModel {
   salePrice?: number;
   stockQuantity?: number;
   avgRating?: number;
-
+  
   constructor(
     bookId: number,
     name: string,

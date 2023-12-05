@@ -9,6 +9,7 @@ export const RegisterPage : React.FC = () => {
     const [repeatPassword,setRepeatPassword] = useState("");
     const [phoneNumber,setPhoneNumber] = useState("");
     const [gender,setGender] = useState('M');
+	const [avatar, setAvatar] = useState<File | null>(null);
     // Error checking 
     const [errorUsername,setErrorUsername] = useState("");
     const [errorEmail,setErrorEmail] = useState("");
@@ -33,9 +34,10 @@ export const RegisterPage : React.FC = () => {
         const isPasswordValid = !validatePassword(password);
         const isRepeatPasswordValid = !validateRepeatPassword(repeatPassword);
 
-        console.log(isUserName, isEmailValid, isPasswordValid ,isRepeatPasswordValid);
-        if (isEmailValid && isPasswordValid && isRepeatPasswordValid && isUserName) {
+        if (isEmailValid && isPasswordValid && isRepeatPasswordValid && isUserName ) {
             try {
+				const based64Avatar = avatar ? await convertFileToBase64(avatar) : null;
+				console.log(based64Avatar);
                 const url = `http://localhost:8080/account/register`;
                 const response = await fetch(url, {
                     method: 'POST',
@@ -52,6 +54,7 @@ export const RegisterPage : React.FC = () => {
                         gender: gender,
                         active: 0,
                         activeCode: "",
+	                    avatar: based64Avatar
                     })
                 });
                 if (response.ok) {
@@ -64,6 +67,14 @@ export const RegisterPage : React.FC = () => {
             }
         }
     }
+	const convertFileToBase64 = (file : File) => {
+		return new Promise((resolve, reject) => {
+			const reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = () => resolve(reader.result ? (reader.result as string).split(",")[1]: null);
+			reader.onerror = (error) => reject(error);
+		})
+	}
     const validateExistingUsername = async (username: string) => {
         const url = `http://localhost:8080/users/search/existsByUsername?username=${username}`;
         try {
@@ -139,6 +150,12 @@ export const RegisterPage : React.FC = () => {
             return false;
         }
     }
+	const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files) {
+			const file = e.target.files[0];
+			setAvatar(file);
+		}
+	}
     return (
         <div className="container">
             <h1 className="mt-5">
@@ -183,6 +200,10 @@ export const RegisterPage : React.FC = () => {
                         <label htmlFor="gender" className="form-label">Gender</label>
                         <input type="text" id="gender" className="form-control" value={gender} onChange={(e) => {setGender(e.target.value)}}/>
                     </div>
+	                <div className="mb-3">
+		                <label htmlFor="avatar" className={"form-label"}>Avatar</label>
+		                <input type="file" id={"avatar"} className={"form-control"} accept={"images/*"} onChange={handleAvatarChange}/>
+	                </div>
                     <div className="text-center">
                         <button type="submit" className="btn btn-primary" >Register</button>
                         <div className="" style={{color : "green"}}>{notice}</div>

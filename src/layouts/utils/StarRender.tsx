@@ -7,7 +7,6 @@ export const rendering = (rating: number) => {
   const halfStar = Math.ceil(rating - fullStar);
   const nonStar = full - fullStar - halfStar;
   for (let i = 0; i < fullStar; i++) {
-    console.log(rating);
     stars.push(<StarFill className="text-warning" />);
   }
   for (let i = 0; i < halfStar; i++) {
@@ -16,6 +15,5 @@ export const rendering = (rating: number) => {
   for (let i = 0; i < nonStar; i++) {
     stars.push(<Star className="text-warning" />);
   }
-  console.log(fullStar);
   return stars;
 };

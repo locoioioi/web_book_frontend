@@ -9,6 +9,8 @@ import { About } from "./layouts/about/About";
 import { BookDetail } from "./layouts/product/BookDetail";
 import { RegisterPage } from "./layouts/user/Register";
 import {ActivateAccount} from "./layouts/user/ActivateAccount";
+import {Login} from "./layouts/user/Login";
+import BookForm_Admin from "./layouts/admin/BookForm";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -17,17 +19,19 @@ function App() {
       <BrowserRouter>
         <Navbar search={search} setSearch={setSearch} />
         <Routes>
-          <Route path="/" element={<Homepage search={search} />}></Route>
-          <Route
-            path="/:categoryId"
-            element={<Homepage search={search} />}
-          ></Route>
-          <Route path="/about" element={<About />}></Route>
-          <Route path="/book/:bookId" element={<BookDetail />}></Route>
-          <Route path="/register" element={<RegisterPage />}></Route>
-          <Route path="/activate/:email/:code" element={<ActivateAccount />}></Route>
+            <Route path="/" element={<Homepage search={search} />}></Route>
+            <Route
+                path="/:categoryId"
+                element={<Homepage search={search} />}
+            ></Route>
+            <Route path="/about" element={<About />}></Route>
+            <Route path="/book/:bookId" element={<BookDetail />}></Route>
+            <Route path="/register" element={<RegisterPage />}></Route>
+            <Route path="/activate/:email/:code" element={<ActivateAccount />}></Route>
+            <Route path={"/login"} element={<Login/>}></Route>
+	        <Route path={"/admin/create-book"} element={<BookForm_Admin/>}></Route>
         </Routes>
-        <Footer />
+         <Footer />
       </BrowserRouter>
     </div>
   );

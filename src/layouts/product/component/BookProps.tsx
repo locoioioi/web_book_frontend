@@ -30,7 +30,7 @@ export const BookProps: React.FC<BookProps> = (props) => {
   if (isLoading) {
     return <h1>Is loading ...</h1>;
   }
-
+  
   if (error !== null) {
     return <h1>Error!!! {error}</h1>;
   }
