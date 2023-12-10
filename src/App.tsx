@@ -11,6 +11,7 @@ import { RegisterPage } from "./layouts/user/Register";
 import {ActivateAccount} from "./layouts/user/ActivateAccount";
 import {Login} from "./layouts/user/Login";
 import BookForm_Admin from "./layouts/admin/BookForm";
+import { FavoriteBooks } from "./layouts/favorite/FavoriteBooks";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -29,7 +30,8 @@ function App() {
             <Route path="/register" element={<RegisterPage />}></Route>
             <Route path="/activate/:email/:code" element={<ActivateAccount />}></Route>
             <Route path={"/login"} element={<Login/>}></Route>
-	        <Route path={"/admin/create-book"} element={<BookForm_Admin/>}></Route>
+	          <Route path={"/admin/create-book"} element={<BookForm_Admin/>}></Route>
+            <Route path={"/favorite-book"} element={<FavoriteBooks/>}></Route>
         </Routes>
          <Footer />
       </BrowserRouter>

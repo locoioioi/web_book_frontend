@@ -3,8 +3,10 @@ import { NavbarSearch } from "../navbar-search/NavSearch";
 import { findBookNavBar } from "../../api/BookAPI";
 import BookModel from "../../models/Book";
 import { Link, NavLink } from "react-router-dom";
-import { Search } from "react-bootstrap-icons";
+import { Heart, HeartFill, Search } from "react-bootstrap-icons";
 import {jwtDecode} from "jwt-decode";
+import Category from "../../models/Category";
+import { getAllCategories } from "../../api/CategoryAPI";
 
 interface NavbarInterface {
   search: string;
@@ -19,7 +21,16 @@ export const Navbar: React.FC<NavbarInterface> = (props) => {
   const [searchBox, setSearchBox] = useState("");
   const [error, setError] = useState(null);
   const [isLogin,setIsLogin] = useState(false);
+  const [categories, setCategories] = useState<Category[]>([]);
   useEffect(() => {
+    
+    getAllCategories()
+    .then(categories => {
+      setCategories(categories)
+    }).catch(error => {
+      setError(error.message);
+    });
+
     findBookNavBar(searchBox)
       .then((booksData) => {
         setBooks(booksData.result);
@@ -81,21 +92,15 @@ export const Navbar: React.FC<NavbarInterface> = (props) => {
                     All
                   </Link>
                 </li>
-                <li>
-                  <Link className="dropdown-item" to={"/1"}>
-                    Thể loại 1
-                  </Link>
-                </li>
-                <li>
-                  <Link className="dropdown-item" to={"/2"}>
-                    Thể loại 2
-                  </Link>
-                </li>
-                <li>
-                  <Link className="dropdown-item" to={"/3"}>
-                    Thể loại 3
-                  </Link>
-                </li>
+                {
+                  categories.map((category) => (
+                    <li>
+                      <Link className="dropdown-item" to={`/${category.categoryId}`}>
+                        {category.name}
+                      </Link>
+                    </li>
+                  ))
+                }
               </ul>
             </li>
             <li className="nav-item dropdown">
@@ -173,7 +178,13 @@ export const Navbar: React.FC<NavbarInterface> = (props) => {
             </a>
           </li>
         </ul>
-
+        <ul className="navbar-nav me-1">
+          <li className="nav-item">
+            <Link className="nav-link" to={"/favorite-book"}>
+              <HeartFill ></HeartFill>
+            </Link>
+          </li>
+        </ul>
         {/* Biểu tượng đăng nhập */}
         {
           isLogin

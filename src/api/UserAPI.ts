@@ -1,4 +1,5 @@
 import UserModel from "../models/User";
+import WishListModel from "../models/WishList";
 import { getRequest } from "./Request";
 
 export const getUser = async (reviewId: number): Promise<UserModel> => {
@@ -18,3 +19,15 @@ export const getUser = async (reviewId: number): Promise<UserModel> => {
     phoneNumber: response.phoneNumber,
   };
 };
+
+export const getUserWishList = async (userId: number): Promise<WishListModel[]> => { 
+  const response = await getRequest(`http://localhost:8080/users/${userId}/wishLists`);
+  const responseData = await response._embedded.wishLists;
+  const wishLists : WishListModel[] = [];
+  for (const key in responseData) {
+    wishLists.push({
+      wishListId : responseData[key].wishListId
+    });
+  }
+  return wishLists;
+}

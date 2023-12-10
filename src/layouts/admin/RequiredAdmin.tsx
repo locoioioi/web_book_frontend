@@ -19,9 +19,7 @@ const RequireAdmin = <P extends Object>(WrappedComponent: React.ComponentType<P>
 			}else {
 				// decode jwt
 				const decodedToken = jwtDecode(token) as JwtPayload;
-				console.log(decodedToken);
 				const isAdmin = decodedToken.isAdmin;
-				console.log(isAdmin);
 
 				if (!isAdmin) {
 					navigate("/");

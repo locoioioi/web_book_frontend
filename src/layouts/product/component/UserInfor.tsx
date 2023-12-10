@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import UserModel from "../../../models/User";
-import { getUser } from "../../../api/User.API";
+import { getUser } from "../../../api/UserAPI";
 
 interface UserInforInterface {
   reviewId: number;

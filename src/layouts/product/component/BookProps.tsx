@@ -8,6 +8,7 @@ import {
 import { Link } from "react-router-dom";
 import { rendering } from "../../utils/StarRender";
 import formatNum from "../../utils/FormatNumber";
+import { createWishList } from "../../../api/WishListAPI";
 interface BookProps {
   book: BookModel;
 }
@@ -34,6 +35,10 @@ export const BookProps: React.FC<BookProps> = (props) => {
   if (error !== null) {
     return <h1>Error!!! {error}</h1>;
   }
+
+  const addToFavorite = () => {
+    createWishList(props.book.bookId);
+  };
 
   return (
     <div className="col-md-3 mt-2">
@@ -67,9 +72,10 @@ export const BookProps: React.FC<BookProps> = (props) => {
               </div>
             </div>
             <div className="col-6 d-flex justify-content-end">
-              <a href="#" className="btn btn-secondary btn-block me-3">
+              <button className="btn btn-secondary btn-block me-3" onClick={addToFavorite}>
                 <i className="fas fa-heart"></i>
-              </a>
+              </button>
+
               <button className="btn btn-danger btn-block float-end">
                 <i className="fas fa-shopping-cart"></i>
               </button>

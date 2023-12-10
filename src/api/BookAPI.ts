@@ -83,3 +83,18 @@ export const getBookById = async (bookId: number): Promise<BookModel> => {
     description: response.description,
   };
 };
+
+export const getBookByWishListId = async (wishListId :number): Promise<BookModel> => {
+  const response = await getRequest(`http://localhost:8080/wishlists/${wishListId}/book`);
+  return {
+    bookId: response.bookId,
+    name: response.name,
+    author: response.author,
+    listedPrice: response.listedPrice,
+    salePrice: response.salePrice,
+    ISBN: response.ISBN,
+    stockQuantity: response.stockQuantity,
+    avgRating: response.avgRating,
+    description: response.description,
+  };
+}
